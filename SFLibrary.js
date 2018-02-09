@@ -25,11 +25,11 @@ var querySF = function (query) {
 
     });
 };
-var accountSF = function (param) {
+var readSF = function (param,tbname) {
         var arrayId = [];
         var arrayName = [];
 
-    conn.query('SELECT '+ getCollum(param)+' FROM Account', function (err, res) {
+    conn.query('SELECT '+ getCollumn(param)+' FROM ' + tbname, function (err, res) {
         console.log('...eseguo la query...');
 
         if (err) {
@@ -60,12 +60,13 @@ var fillTableSF = function(array,tbname) {
                 if (rets[i].success) {
                     console.log("Created record id : " + rets[i].id);
                 }
+                else console.log('errore...')
             }
         });
 
 };
 
-var getCollum = function(string){
+var getCollumn = function(string){
     var array = string.split('|');
     var newString = '';
     for (var i=0; i < array.length; i++) {
@@ -81,7 +82,7 @@ exports.user = user;
 //esporto le funzioni
 exports.conSF = conSF;
 exports.querySF = querySF;
-exports.accountSF = accountSF;
+exports.accountSF = readSF;
 exports.fillTableSF = fillTableSF;
 
-exports.getCollum = getCollum;
+exports.getCollum = getCollumn;

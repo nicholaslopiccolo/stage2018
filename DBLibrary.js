@@ -26,16 +26,15 @@ var queryDB = function(query) {
     });
 };
 var readDB = function(tbname,param) {
-    var res = null;
-    con.query('SELECT '+ getCollum(param) +' FROM stage2018.' + tbname, function (err, result, fields) {
+
+    return con.query('SELECT '+ getCollumn(param) +' FROM stage2018.' + tbname, function (err, result, fields) {
+
         if (err) console.log(err);
         else {
             console.log('Lettura avvernuta con successo\n');
-            console.log(result);
-            res = result;
-            return res;
         }
-    });
+    })._results;
+
 };
 var createTableDB = function(tbName) {
     console.log('Creo la tabella '+ tbName + '...');
@@ -65,7 +64,7 @@ var updateRecordDB = function() {
 
 };
 
-var getCollum = function(string){
+var getCollumn = function(string){
     var array = string.split('|');
     var newString = '';
     for (var i=0; i < array.length; i++) {

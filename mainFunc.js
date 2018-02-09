@@ -11,22 +11,20 @@ function connessione (){
 }
 function scaricaTB(tbname) {
     setTimeoutPromise(1500).then(function () {
-        var fields = sf.accountSF();
+        var fields = sf.accountSF();//scarica la tabella
         setTimeoutPromise(500).then(function () {
-            db.createTableDB(tbname);
+            db.createTableDB(tbname);//crea la tabella
             setTimeoutPromise(500).then(function () {
-                db.fillTableDB(fields, tbname);
+                db.fillTableDB(fields, tbname);//riempie la tabella
             });
         });
     });
 };
 function inseriscidaDB (tbname,param){
-    var fieldsDB = null;
-    var fieldsSF = null;
     setTimeoutPromise(1500).then(function () {
-        fieldsDB = db.readDB(tbname, param);
-        setTimeoutPromise(1000).then(function () {
-            console.log(fieldsDB);
+        var fields = db.readDB(tbname, param);//scarica la tabella
+        setTimeoutPromise(500).then(function () {
+            sf.fillTableSF(fields[0], 'Account');//riempie la tabella
         });
     });
 };
