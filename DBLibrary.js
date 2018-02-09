@@ -25,11 +25,24 @@ var queryDB = function(query) {
         else console.log(query + ': query avvernuta con successo!!!')
     });
 };
-var createTableDB = function(tbName) {
-    console.log('Creo la tabella '+ tbName + '...\n');
-
-    con.query("CREATE TABLE " + tbName + " (Id VARCHAR(30) PRIMARY KEY, Name VARCHAR(30) NOT NULL)", function (err, result, fields) {
+var readDB = function(tbname,param) {
+    var res = null;
+    con.query('SELECT '+ getCollum(param) +' FROM stage2018.' + tbname, function (err, result, fields) {
         if (err) console.log(err);
+        else {
+            console.log('Lettura avvernuta con successo\n');
+            console.log(result);
+            res = result;
+            return res;
+        }
+    });
+};
+var createTableDB = function(tbName) {
+    console.log('Creo la tabella '+ tbName + '...');
+    var sql = "CREATE TABLE " + tbName + " (Id INT PRIMARY KEY AUTO_INCREMENT, IdSf VARCHAR(20) NOT NULL, Name VARCHAR(30) NOT NULL)";
+    con.query(sql, function (err, result, fields) {
+        if (err) console.log(err);
+        else console.log('                              ...tabella creata\n');
     });
 };
 var dropTableDB = function(tbName) {
@@ -41,25 +54,35 @@ var fillTableDB = function(array,tbname) {
     console.log('Riempio la tabella '+ tbname + '...\n');
     for (var i=0 in array.id) {
 
-        var sql = 'INSERT INTO ' + tbname + '(Id, Name) VALUES ("' + array.id[i] + '","' + array.name[i] + '")';
-        console.log(sql);
-
-        con.query(sql, function (err, result, fields) {
+        con.query('INSERT INTO ' + tbname + '(Id, IdSf, Name) VALUES ("","' + array.id[i] + '","' + array.name[i] + '")', function (err, result) {
             if (err) console.log(err);
+            else console.log('Row Inserita');
         });
         i++;
     }
-
 };
 var updateRecordDB = function() {
 
 };
+
+var getCollum = function(string){
+    var array = string.split('|');
+    var newString = '';
+    for (var i=0; i < array.length; i++) {
+        if(i != (array.length-1)) newString = newString + array[i]+ ',';
+        else newString = newString + array[i];
+    }
+    console.log('start: '+newString);
+    return newString;
+};
+
 // FINE QUERY
 
 exports.conDB = conDB;
 
 exports.queryDB = queryDB;
 exports.createTableDB = createTableDB;
+exports.readDB = readDB;
 exports.dropTableDB = dropTableDB;
 exports.fillTableDB = fillTableDB;
 exports.updateRecordDB = updateRecordDB;

@@ -20,19 +20,6 @@ https.createServer(serverOptions, app).listen(3000,function(){
 //connessione
 funcs.connessione();
 //elaborazione
-funcs.scaricaTB('Account');
+funcs.inseriscidaDB('Account', 'IdSF|Name');
+//funcs.scaricaTB('Account');
 
-function inseriscidaDB (id,name){
-    var fieldsDB = null;
-    var fieldsSF = null;
-    setTimeoutPromise(1500).then(function () {
-        fieldsSF = sf.accountSF();
-        setTimeoutPromise(500).then(function () {
-            db.createTable(tbname);
-            setTimeoutPromise(500).then(function () {
-                db.fillTable(fieldsDB, tbname);
-            });
-        });
-    });
-
-};

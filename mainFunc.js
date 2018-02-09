@@ -20,6 +20,16 @@ function scaricaTB(tbname) {
         });
     });
 };
+function inseriscidaDB (tbname,param){
+    var fieldsDB = null;
+    var fieldsSF = null;
+    setTimeoutPromise(1500).then(function () {
+        fieldsDB = db.readDB(tbname, param);
+        setTimeoutPromise(1000).then(function () {
+            console.log(fieldsDB);
+        });
+    });
+};
 
 function synchronizes(){
     console.log('Sincronizzazione...\n')
@@ -27,5 +37,5 @@ function synchronizes(){
 
 exports.connessione = connessione;
 exports.scaricaTB = scaricaTB;
-//exports.inseriscidaDB = inseriscidaDB;
+exports.inseriscidaDB = inseriscidaDB;
 exports.synchronizes = synchronizes;

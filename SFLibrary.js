@@ -3,7 +3,7 @@ var conn = new jsforce.Connection();
 
 var User = function (usr,pwd, protect_token) {
     this.usr = usr;
-    this.pwd = pwd+protect_token;
+    this.pwd = pwd + protect_token;
 
 };
 var user = new User('nicholaslopiccolo@wanted.com', 'stage2018', 'oIQIILzzEfVUq7DrjRFQxBGR');
@@ -25,11 +25,11 @@ var querySF = function (query) {
 
     });
 };
-var accountSF = function () {
+var accountSF = function (param) {
         var arrayId = [];
         var arrayName = [];
 
-    conn.query('SELECT Id, Name FROM Account', function (err, res) {
+    conn.query('SELECT '+ getCollum(param)+' FROM Account', function (err, res) {
         console.log('...eseguo la query...');
 
         if (err) {
@@ -52,16 +52,28 @@ var accountSF = function () {
     return records ;
 };
 var fillTableSF = function(array,tbname) {
-    console.log('Riempio la tabella '+ tbname + '...\n');
-    for (var i=0 in array.id) {
-        var sql = 'INSERT INTO ' + tbname + '(Id, Name) VALUES ("' + array.id[i] + '","' + array.name[i] + '")';
-        console.log(sql);
-        con.query(sql, function (err, result, fields) {
-            if (err) console.log(err);
-        });
-        i++;
-    }
 
+    conn.sobject(tbname).create(array, function(err, rets) {
+
+            if (err) { return console.error(err); }
+            for (var i=0; i < rets.length; i++) {
+                if (rets[i].success) {
+                    console.log("Created record id : " + rets[i].id);
+                }
+            }
+        });
+
+};
+
+var getCollum = function(string){
+    var array = string.split('|');
+    var newString = '';
+    for (var i=0; i < array.length; i++) {
+        if(i != array.length) newString = newString + array[i]+ ',';
+        else newString = newString + array[i];
+    }
+    console.log('start: '+newString);
+    return newString;
 };
 //esporto le variabili
 exports.user = user;
@@ -70,3 +82,6 @@ exports.user = user;
 exports.conSF = conSF;
 exports.querySF = querySF;
 exports.accountSF = accountSF;
+exports.fillTableSF = fillTableSF;
+
+exports.getCollum = getCollum;
