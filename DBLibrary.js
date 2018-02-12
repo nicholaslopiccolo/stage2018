@@ -25,7 +25,7 @@ var queryDB = function(query) {
         else console.log(query + ': query avvernuta con successo!!!')
     });
 };
-var readDB = function(tbname,param) {
+var readDB = function(param,tbname) {
 
     return con.query('SELECT '+ getCollumn(param) +' FROM stage2018.' + tbname, function (err, result, fields) {
 

@@ -1,6 +1,9 @@
 var fs = require('fs');
+var util = require('util');
 var https = require('https');
+var async = require('async');
 var express = require('express');
+const setTimoutPromise = util.promisify(setTimeout);
 var app = new express();
 
 var sf = require('./SFLibrary.js');
@@ -15,11 +18,15 @@ const serverOptions = {
 };
 https.createServer(serverOptions, app).listen(3000,function(){
     console.log('Node   HTTPS server is running...');
+    main();
 });
 
-//connessione
-funcs.connessione();
-//elaborazione
-funcs.inseriscidaDB('Account', 'IdSF|Name');
-//funcs.scaricaTB('Account');
+function main(){
+    funcs.connessione();
+    setTimoutPromise(2000).then(function(){
+    funcs.scaricaTB('Id|Name', 'Account');
+    });
+}
+
+
 
