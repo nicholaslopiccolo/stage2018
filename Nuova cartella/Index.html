@@ -1,0 +1,37 @@
+<html>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <script src="jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Interfaccia utente!</title>
+</head>
+<body>
+<div clsss="global">
+    <h1>Electron-app</h1>
+    <div id="vue">
+        <div class="tabelle">
+            <table-name
+                    v-for="table in tableList"
+                    v-bind:table="table">
+            </table-name>
+        </div>
+    </div>
+    <script src="render/vue.js"></script>
+    <div class="query">
+
+    </div>
+    <script src="render/render.js"></script>
+    <div class="choise">
+        <input type="button" class="myButton" value="Update" onclick="update();">
+        <br>
+        <input type="button" class="myButton" value="Backup" onclick="backup('Account')">
+    </div>
+</div>
+<div class="information">
+</div>
+
+</body>
+</html>
