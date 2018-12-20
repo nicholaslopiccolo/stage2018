@@ -2,10 +2,10 @@ var mysql = require('mysql');
 var async = require('async');
 
 var paramDB = {
-    host: "mysql56.gnet.it",
-    user: "stage",
-    password: "stage2018",
-    database: "stage2018"
+    host: "",
+    user: "",
+    password: "",
+    database: ""
 };
 var con = null;
 
